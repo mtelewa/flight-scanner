@@ -31,14 +31,16 @@ def display_welcome():
 # define the cities available in the database
 cities = SHEET.worksheet("jan1").col_values(1)[1:]
 
-def get_cities():
+def get_city(string):
     """
     fetches user input for the departure and destination questions 
     and validates it through validate_city function
+    
+    parameters: string with either "from" or "to"
     """
     while True:
         ask_departure = \
-            Fore.YELLOW + "\033[1m" + "Where are you travelling from?" + \
+            Fore.YELLOW + "\033[1m" + f"Where are you travelling {string}?" + \
                                       "\n" + "Insert the full city name, first three letters or the number next to the city" + \
                                       "\n" + "example: cairo, cai or 2 for Cairo \n" + "\033[0m"
         print(ask_departure)
@@ -48,38 +50,17 @@ def get_cities():
             print(idx, val.capitalize())
 
         # fetch user input
-        departure_city = input(Fore.BLUE + "\n" + "\033[1m" + "I am travelling from: \n" + "\033[0m")
+        city = input(Fore.BLUE + "\n" + "\033[1m" + f"I am travelling {string}: \n" + "\033[0m")
 
         # and validate it
-        city_index = validate_city(departure_city)
+        city_index = validate_city(city)
         if city_index is not None:
-            departure_city = cities[city_index]
-            print(Fore.BLUE + "\033[1m" + f"You are travelling from {departure_city.capitalize()}" + "\033[0m" + "\n")
-            break
-
-    while True:
-        ask_destination = \
-            Fore.YELLOW + "\033[1m" + "Where are you travelling to?" + \
-                                      "\n" + "Insert the full city name, first three letters or the number next to the city" + \
-                                      "\n" + "example: cairo, cai or 2 for Cairo \n" + "\033[0m"
-        print(ask_destination)
-        
-        # display the cities for the user
-        for idx, val in enumerate(cities):
-            print(idx, val.capitalize())
-
-        # fetch user input
-        destination_city = input(Fore.BLUE + "\n" + "\033[1m" + "I am travelling to: \n" + "\033[0m")
-
-        # and validate it
-        city_index = validate_city(destination_city)
-        if city_index is not None:
-            destination_city = cities[city_index]
-            print(Fore.BLUE + "\033[1m" + f"You are travelling to {destination_city.capitalize()}" + "\033[0m" + "\n")
+            city = cities[city_index]
+            print(Fore.BLUE + "\033[1m" + f"You are travelling {string} {city.capitalize()}" + "\033[0m" + "\n")
             break
 
 
-    return departure_city, destination_city
+    return city
 
 
 
@@ -120,7 +101,8 @@ if __name__ == '__main__':
     Run all program functions
     """
     display_welcome()
-    get_cities()
+    departure_city = get_city("from")
+    destination_city = get_city("to")
 
 
 
