@@ -31,7 +31,7 @@ def display_welcome():
 # define the cities available in the database
 cities = SHEET.worksheet("jan1").col_values(1)[1:]
 
-def get_departure_city():
+def get_cities():
     """
     fetches user input for the departure and destination questions 
     and validates it through validate_city function
@@ -51,8 +51,9 @@ def get_departure_city():
         departure_city = input(Fore.BLUE + "\n" + "\033[1m" + "I am travelling from: \n" + "\033[0m")
 
         # and validate it
-        if validate_city(departure_city):
-            departure_city = cities[validate_city(departure_city)]
+        city_index = validate_city(departure_city)
+        if city_index is not None:
+            departure_city = cities[city_index]
             print(Fore.BLUE + "\033[1m" + f"You are travelling from {departure_city.capitalize()}" + "\033[0m" + "\n")
             break
 
@@ -71,13 +72,14 @@ def get_departure_city():
         destination_city = input(Fore.BLUE + "\n" + "\033[1m" + "I am travelling to: \n" + "\033[0m")
 
         # and validate it
-        if validate_city(destination_city):
-            destination_city = cities[validate_city(destination_city)]
+        city_index = validate_city(destination_city)
+        if city_index is not None:
+            destination_city = cities[city_index]
             print(Fore.BLUE + "\033[1m" + f"You are travelling to {destination_city.capitalize()}" + "\033[0m" + "\n")
             break
 
 
-    return departure_city
+    return departure_city, destination_city
 
 
 
@@ -92,8 +94,8 @@ def validate_city(city):
     elif any(item.startswith(city) for item in cities):
         for idx, val in enumerate(cities):
             if val.startswith(city):
-               return idx
-               break
+                return idx
+                break
     else:
         try:
             idx = int(city)
@@ -103,7 +105,13 @@ def validate_city(city):
                 print(Fore.RED + "\033[1m" + 'Please choose a value from 0 to 5 \n' + "\033[0m")
         except ValueError:
             print(Fore.RED + "\033[1m" + f"Invalid city: {city} is not a city in the database \n" + "\033[0m")
-            return False
+            idx = None
+
+
+
+
+
+
 
 
 
@@ -112,7 +120,7 @@ if __name__ == '__main__':
     Run all program functions
     """
     display_welcome()
-    get_departure_city()
+    get_cities()
 
 
 
