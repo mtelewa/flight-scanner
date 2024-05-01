@@ -32,19 +32,53 @@ def display_welcome():
 cities = SHEET.worksheet("jan1").col_values(1)[1:]
 
 def get_departure_city():
+    """
+    fetches user input for the departure and destination questions 
+    and validates it through validate_city function
+    """
     while True:
-        print(Fore.YELLOW + "\033[1m" + "Where are you travelling from?" + "\033[0m")
-        print("Insert the full city name, first three letters or the number next to the city")
-        print("example: cairo, cai or 2 for Cairo \n")
+        ask_departure = \
+            Fore.YELLOW + "\033[1m" + "Where are you travelling from?" + \
+                                      "\n" + "Insert the full city name, first three letters or the number next to the city" + \
+                                      "\n" + "example: cairo, cai or 2 for Cairo \n" + "\033[0m"
+        print(ask_departure)
+        
+        # display the cities for the user
         for idx, val in enumerate(cities):
-            print(idx, val)
+            print(idx, val.capitalize())
+
+        # fetch user input
         departure_city = input(Fore.BLUE + "\n" + "\033[1m" + "I am travelling from: \n" + "\033[0m")
 
-
+        # and validate it
         if validate_city(departure_city):
-            city_chosen = cities[validate_city(departure_city)]
-            print(f"You chose {upper(city_chosen)}")
+            departure_city = cities[validate_city(departure_city)]
+            print(Fore.BLUE + "\033[1m" + f"You are travelling from {departure_city.capitalize()}" + "\033[0m" + "\n")
             break
+
+    while True:
+        ask_destination = \
+            Fore.YELLOW + "\033[1m" + "Where are you travelling to?" + \
+                                      "\n" + "Insert the full city name, first three letters or the number next to the city" + \
+                                      "\n" + "example: cairo, cai or 2 for Cairo \n" + "\033[0m"
+        print(ask_destination)
+        
+        # display the cities for the user
+        for idx, val in enumerate(cities):
+            print(idx, val.capitalize())
+
+        # fetch user input
+        destination_city = input(Fore.BLUE + "\n" + "\033[1m" + "I am travelling to: \n" + "\033[0m")
+
+        # and validate it
+        if validate_city(destination_city):
+            destination_city = cities[validate_city(destination_city)]
+            print(Fore.BLUE + "\033[1m" + f"You are travelling to {destination_city.capitalize()}" + "\033[0m" + "\n")
+            break
+
+
+    return departure_city
+
 
 
 def validate_city(city):
@@ -56,18 +90,21 @@ def validate_city(city):
         idx = cities.index(city)
         return idx
     elif any(item.startswith(city) for item in cities):
-        print('ne')
+        for idx, val in enumerate(cities):
+            if val.startswith(city):
+               return idx
+               break
     else:
         try:
             idx = int(city)
-            return idx
+            if idx < len(cities):
+                return idx
+            else: 
+                print(Fore.RED + "\033[1m" + 'Please choose a value from 0 to 5 \n' + "\033[0m")
         except ValueError:
-            print('Invalid city: city is not in database \n')
+            print(Fore.RED + "\033[1m" + f"Invalid city: {city} is not a city in the database \n" + "\033[0m")
             return False
 
-    # else:
-    #     raise ValueError('Invalid city: city is not in database \n')
-    #     return False
 
 
 if __name__ == '__main__':
