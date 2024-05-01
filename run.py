@@ -30,20 +30,23 @@ def display_welcome():
 
 # define the cities available in the database
 cities = SHEET.worksheet("jan1").col_values(1)[1:]
+months = ["january", "february", "march"]
+
+
 
 def get_city(string):
     """
     fetches user input for the departure and destination questions 
     and validates it through validate_city function
     
-    parameters: string with either "from" or "to"
+    parameters: string, either "from" or "to"
     """
     while True:
-        ask_departure = \
+        ask_city = \
             Fore.YELLOW + "\033[1m" + f"Where are you travelling {string}?" + \
                                       "\n" + "Insert the full city name, first three letters or the number next to the city" + \
                                       "\n" + "example: cairo, cai or 2 for Cairo \n" + "\033[0m"
-        print(ask_departure)
+        print(ask_city)
         
         # display the cities for the user
         for idx, val in enumerate(cities):
@@ -53,42 +56,71 @@ def get_city(string):
         city = input(Fore.BLUE + "\n" + "\033[1m" + f"I am travelling {string}: \n" + "\033[0m")
 
         # and validate it
-        city_index = validate_city(city)
+        city_index = validate_data(city, cities)
         if city_index is not None:
             city = cities[city_index]
             print(Fore.BLUE + "\033[1m" + f"You are travelling {string} {city.capitalize()}" + "\033[0m" + "\n")
             break
 
-
     return city
 
 
 
-def validate_city(city):
+def validate_data(data, data_list):
     """
-    checks that city is in the database either the full city name
+    checks that data is in the database either the full city name
     or the first three letters or the number
+
+    parameters: 
+        data: string, input by the user
+        data_list: list, the database entries available
+    
+    returns:
+        idx: integer, index of the data_list where the data input by user was found to be true
     """
-    if city in cities:
-        idx = cities.index(city)
+    if data in data_list:
+        idx = data_list.index(data)
         return idx
-    elif any(item.startswith(city) for item in cities):
-        for idx, val in enumerate(cities):
-            if val.startswith(city):
+    elif any(item.startswith(data) for item in data_list):
+        for idx, val in enumerate(data_list):
+            if val.startswith(data):
                 return idx
                 break
     else:
         try:
-            idx = int(city)
-            if idx < len(cities):
+            idx = int(data)
+            if idx < len(data_list):
                 return idx
             else: 
-                print(Fore.RED + "\033[1m" + 'Please choose a value from 0 to 5 \n' + "\033[0m")
+                print(Fore.RED + "\033[1m" + f"Please choose a value from 0 to {len(data_list)} \n" + "\033[0m")
         except ValueError:
-            print(Fore.RED + "\033[1m" + f"Invalid city: {city} is not a city in the database \n" + "\033[0m")
+            print(Fore.RED + "\033[1m" + f"Invalid data: {data} is not in the database \n" + "\033[0m")
             idx = None
 
 
+def get_month():
+    while True:
+        ask_time = \
+            Fore.YELLOW + "\033[1m" + f"When are you travelling?" + \
+                                        "\n" + "Insert the full month name, first three letters or the month number" + \
+                                        "\n" + "example: january, jan or 0 for January \n" + "\033[0m"
+        print(ask_time)
+
+        # display the months for the user
+        for idx, val in enumerate(months):
+            print(idx, val.capitalize())
+
+        # fetch user input
+        month = input(Fore.BLUE + "\n" + "\033[1m" + f"I am travelling in: \n" + "\033[0m")
+
+        # and validate it
+        month_index = validate_data(month, months)
+        if month_index is not None:
+            month = months[month_index]
+            print(Fore.BLUE + "\033[1m" + f"You are travelling in {month.capitalize()}" + "\033[0m" + "\n")
+            break
+    
+    return month
 
 
 
@@ -103,6 +135,7 @@ if __name__ == '__main__':
     display_welcome()
     departure_city = get_city("from")
     destination_city = get_city("to")
+    month = get_month()
 
 
 
