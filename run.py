@@ -268,7 +268,7 @@ def book_flight(table):
             # append the data to the flight_data worksheet in the booked_flights spreadsheet
             worksheet.append_row(data)
             print(Fore.YELLOW + "\033[1m" + f"Congratulations! Your flight reservation was added to our database" + "\n"
-                                          + " Our customer service will get back to you shortly to finalize the payment!" + "\n" + "\033[0m")
+                                          + "Our customer service will get back to you shortly to finalize the payment!" + "\n" + "\033[0m")
             break
 
 
