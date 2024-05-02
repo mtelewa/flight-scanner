@@ -209,9 +209,16 @@ def get_entry(choice):
 def validate_name(string):
     """
     checks if user full name has numbers
-    source: https://stackoverflow.com/questions/19859282/check-if-a-string-contains-a-number
+    sources: 
+        - https://stackoverflow.com/questions/19859282/check-if-a-string-contains-a-number
+        - https://stackoverflow.com/questions/57062794/is-there-a-way-to-check-if-a-string-contains-special-characters
+    
+    parameters: 
+        string, name
+    returns:
+        boolean (True or False)
     """
-    return any(char.isdigit() for char in string)
+    return any(char.isdigit() for char in string) or any(not c.isalnum() for c in string)
 
 
 def get_name():
@@ -251,13 +258,34 @@ def book_flight(table):
     print(Fore.YELLOW + "\033[1m" + f"Booking flight .." + "\033[0m" + "\n")
     worksheet = BOOK_SHEET.worksheet('flight_data')
     
-    name = get_name()
+    while True:
+        name = get_name()
 
-    data = [name, departure_city, destination_city]
-    worksheet.append_row(data)
+        # get the pretty table row
+        row = table[0]
+        row.border = False
+        row.header = False
+
+        # and the table data
+        price = row.get_string(fields=["Price ($)"]).strip()
+        date = row.get_string(fields=["Date"]).strip()
+        time = row.get_string(fields=["Departure time"]).strip()
+
+        # data list
+        data = [name, departure_city, destination_city, price, date, time]
+    
+        # final data checks with the user
+        is_data_correct = input(Fore.BLUE + "\033[1m" + "Please check your details before finalizing the booking" + \
+                                            "\n" + "Enter (yes/Y/y) or (no/N/n)" + \
+                                            "\n" + "Any other value is considered a 'No'" + "\033[0m")
+
+
+        if is_data_correct == 'y' or is_data_correct == 'Y' or  is_data_correct == 'yes':
+            # append the data to the flight_data worksheet in the booked_flights spreadsheet
+            worksheet.append_row(data)
+            break
+            
         
-
-
 
 
 if __name__ == '__main__':
@@ -292,7 +320,7 @@ if __name__ == '__main__':
         try:
             proceed = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Book flight [0] or change month [1] or exit program [2]? \n" + "\033[0m"))
             if proceed == 0:
-                book_flight()
+                book_flight(table)
                 break
             if proceed == 1:
                 month = get_month()
