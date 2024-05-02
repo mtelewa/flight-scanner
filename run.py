@@ -277,12 +277,14 @@ def book_flight(table):
         # final data checks with the user
         is_data_correct = input(Fore.BLUE + "\033[1m" + "Please check your details before finalizing the booking" + \
                                             "\n" + "Enter (yes/Y/y) or (no/N/n)" + \
-                                            "\n" + "Any other value is considered a 'No'" + "\033[0m")
+                                            "\n" + "Any other value is considered a 'No'" + "\n" + "\033[0m")
 
 
         if is_data_correct == 'y' or is_data_correct == 'Y' or  is_data_correct == 'yes':
             # append the data to the flight_data worksheet in the booked_flights spreadsheet
             worksheet.append_row(data)
+            print(Fore.YELLOW + "\033[1m" + f"Congratulations! Your flight reservation was added to our database" + \
+                                             "\n" + " Our customer service will get back to you shortly to finalize the payment!" + "\n" + "\033[0m")
             break
             
         
@@ -318,15 +320,15 @@ if __name__ == '__main__':
 
     while True:
         try:
-            proceed = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Book flight [0] or change month [1] or exit program [2]? \n" + "\033[0m"))
-            if proceed == 0:
+            book_or_exit = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Book flight [0] or change month [1] or exit program [2]? \n" + "\033[0m"))
+            if book_or_exit == 0:
                 book_flight(table)
                 break
-            if proceed == 1:
+            if book_or_exit == 1:
                 month = get_month()
                 table = ask_need()
                 print(table)
-            if proceed == 2:
+            if book_or_exit == 2:
                 sys.exit()
 
         except ValueError:
