@@ -204,6 +204,43 @@ def get_entry(choice):
     return table
 
 
+def validate_name(string):
+    """
+    checks if user full name has numbers
+    source: https://stackoverflow.com/questions/19859282/check-if-a-string-contains-a-number
+    """
+    return any(char.isdigit() for char in inputString)
+
+
+def get_name():
+    """
+    fetches name from user input and validates it by calling validate_name function
+    """
+    while True:
+        name = input(Fore.YELLOW + "\033[1m" + f"Please enter your full name" + \
+                                    "\n" + "example: Alex Mustermann" +
+                                    "\n" + "please note that if you entered more than two names," 
+                                    "\n" + "only the first two are considered" + "\033[0m" + "\n")
+
+        # split name to first and last names and check that at least two names are input
+        first_name = name.split(" ")[0]
+        try:
+            last_name = name.split(" ")[1]
+        except IndexError:
+            print(Fore.RED + "\033[1m" + "Please enter your full name as shown in the example" + "\033[0m" + "\n")
+
+        if validate_name(first_name):
+            print(Fore.RED + "\033[1m" + "Invalid first name. Please enter your full name as shown in the example" + "\033[0m" + "\n")
+        elif validate_name(last_name):
+            print(Fore.RED + "\033[1m" +  "Invalid last name. Please enter your full name as shown in the example" + "\033[0m" + "\n")
+        else:
+            name = first_name + " " + last_name
+            print(Fore.BLUE + "\033[1m" + f"Your name is {first_name} {last_name}" + "\033[0m" + "\n")
+            break
+    
+    return name
+
+
 def book_flight():
     """
     updates the booked_flights spreadsheet
@@ -211,27 +248,10 @@ def book_flight():
     print(Fore.YELLOW + "\033[1m" + f"Booking flight .." + "\033[0m" + "\n")
     worksheet = BOOK_SHEET.worksheet('flight_data')
     
-    while True:
-        name = input(Fore.YELLOW + "\033[1m" + f"Please enter your full name" + \
-                                    "\n" + "example: Alex Mustermann" +
-                                    "\n" + "please note that if you entered more than two names," 
-                                    "'n" + "only the first two are considered" + "\033[0m" + "\n")
-        first_name = name.split(" ")[0]
-        try:
-            last_name = name.split(" ")[1]
-        except IndexError:
-            print(Fore.RED + "\033[1m" + "Please enter your full name as shown in the example" + "\033[0m" + "\n")
+    name = get_name()
 
-        try:
-            float(first_name)
-            print(Fore.RED + "\033[1m" + "Invalid first name. Please enter your full name as shown in the example" + "\033[0m" + "\n")
-        except ValueError:
-            try:
-                float(last_name)
-                print(Fore.RED + "\033[1m" +  "Invalid last name. Please enter your full name as shown in the example" + "\033[0m" + "\n")
-            except ValueError:
-                print(name)
-                break
+
+
     
 
             
