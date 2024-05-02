@@ -179,7 +179,9 @@ def get_entry(choice):
     if choice == "cheapest":
         print(Fore.BLUE + "\033[1m" + f"Searching cheapest flight in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1,sheets_per_month+1):
-            prices.append(INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(",")[0])
+            cell = INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value
+            price = cell.split(",")[0]
+            prices.append(price)
     
         min_price = prices.index(min(prices))
         table.add_row(INT_SHEET.worksheet(f"{month}{min_price+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
@@ -187,7 +189,9 @@ def get_entry(choice):
     if choice == "fastest":
         print(Fore.BLUE + "\033[1m" + f"Searching fastest flight in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1,sheets_per_month+1):
-            durations.append(INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(",")[1])
+            cell = INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value
+            duration = cell.split(",")[1]
+            durations.append(duration)
 
         min_duration = durations.index(min(durations))
         table.add_row(INT_SHEET.worksheet(f"{month}{min_duration+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
