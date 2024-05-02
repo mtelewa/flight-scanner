@@ -16,7 +16,10 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('interaction_matrix')
+# Interaction matrix spreadsheet
+INT_SHEET = GSPREAD_CLIENT.open('interaction_matrix')
+# Booked flights spreadsheet
+BOOK_SHEET = GSPREAD_CLIENT.open('booked_flights')
 
 
 def display_welcome():
@@ -31,7 +34,7 @@ def display_welcome():
 
 
 # define the cities available in the database
-cities = SHEET.worksheet("january1").col_values(1)[1:]
+cities = INT_SHEET.worksheet("january1").col_values(1)[1:]
 months = ["january", "february", "march"]
 
 
@@ -180,28 +183,62 @@ def get_entry(choice):
     if choice == "cheapest":
         print(Fore.BLUE + "\033[1m" + f"Searching cheapest flight in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1,sheets_per_month+1):
-            prices.append(SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(",")[0])
+            prices.append(INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(",")[0])
     
         min_price = prices.index(min(prices))
-        table.add_row(SHEET.worksheet(f"{month}{min_price+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+        table.add_row(INT_SHEET.worksheet(f"{month}{min_price+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
         
     if choice == "fastest":
         print(Fore.BLUE + "\033[1m" + f"Searching fastest flight in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1,sheets_per_month+1):
-            durations.append(SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(",")[1])
+            durations.append(INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(",")[1])
 
         min_duration = durations.index(min(durations))
-        table.add_row(SHEET.worksheet(f"{month}{min_duration+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+        table.add_row(INT_SHEET.worksheet(f"{month}{min_duration+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
 
     if choice == "all":
         print(Fore.BLUE + "\033[1m" + f"Searching all flights in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1,sheets_per_month+1):
-            table.add_row(SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+            table.add_row(INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
 
     return table
 
 
+def book_flight():
+    """
+    updates the booked_flights spreadsheet
+    """
+    print(Fore.YELLOW + "\033[1m" + f"Booking flight .." + "\033[0m" + "\n")
+    worksheet = BOOK_SHEET.worksheet('flight_data')
+    
+    while True:
+        name = input(Fore.YELLOW + "\033[1m" + f"Please enter your full name" + \
+                                    "\n" + "example: Alex Mustermann" +
+                                    "\n" + "please note that if you entered more than two names," 
+                                    "'n" + "only the first two are considered" + "\033[0m" + "\n")
+        first_name = name.split(" ")[0]
+        try:
+            last_name = name.split(" ")[1]
+        except IndexError:
+            print(Fore.RED + "\033[1m" + "Please enter your full name as shown in the example" + "\033[0m" + "\n")
 
+        try:
+            float(first_name)
+            print(Fore.RED + "\033[1m" + "Invalid first name. Please enter your full name as shown in the example" + "\033[0m" + "\n")
+        except ValueError:
+            try:
+                float(last_name)
+                print(Fore.RED + "\033[1m" +  "Invalid last name. Please enter your full name as shown in the example" + "\033[0m" + "\n")
+            except ValueError:
+                print(name)
+                break
+    
+
+            
+
+    # data = 
+    # worksheet.append_row(data)
+        
 
 
 
@@ -225,7 +262,7 @@ if __name__ == '__main__':
         else:
             break
 
-    # 
+    # ask user what they are looking for (cheapest, fastest or all flights in a certain month)
     month = get_month()
     table = ask_need()
     print(table)
