@@ -2,6 +2,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 from pprint import pprint
 from colorama import Fore, Back, Style
+from prettytable import PrettyTable
 
 # set scope (lists apis that the program shall access in order to run)
 # It is a constant (that's why capital letters)
@@ -30,7 +31,7 @@ def display_welcome():
 
 # define the cities available in the database
 cities = SHEET.worksheet("january1").col_values(1)[1:]
-months = ["january", "february", "march", "flexible"]
+months = ["january", "february", "march"]
 
 
 
@@ -79,12 +80,14 @@ def validate_data(data, data_list):
     returns:
         idx: integer, index of the data_list where the data input by user was found to be true
     """
+    # check if full city name is in database
     if data in data_list:
         idx = data_list.index(data)
         return idx
     elif any(item.startswith(data) for item in data_list):
         for idx, val in enumerate(data_list):
-            if val.startswith(data):
+            # check if the substring exists and that the substring is not empty
+            if val.startswith(data) and data != "":
                 return idx
                 break
     else:
@@ -93,7 +96,7 @@ def validate_data(data, data_list):
             if idx < len(data_list):
                 return idx
             else: 
-                print(Fore.RED + "\033[1m" + f"Please choose a value from 0 to {len(data_list)} \n" + "\033[0m")
+                print(Fore.RED + "\033[1m" + f"Please choose a value from 0 to {len(data_list)-1} \n" + "\033[0m")
         except ValueError:
             print(Fore.RED + "\033[1m" + f"Invalid data: {data} is not in the database \n" + "\033[0m")
             idx = None
@@ -129,13 +132,36 @@ def get_month():
     return month
 
 
-# def get_cheapest():
+def ask_need():
+    while True:
+        try:
+            choice = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Check cheapest trip [0] or fastest trip [1], or all trips [3]? \n" + "\033[0m"))
+            if choice == 0:
+                get_certain("cheapest")
+            if choice == 1:
+                get_certain("fastest")
+            if choice == 2:
+                get_all_flights()
+        except ValueError:
+            print("Please insert a number from 0 to 2")
 
-#     print(departure_city_index, destination_city_index)
+
+def get_certain(choice):
+
+    table = PrettyTable(['Price ($)', 'Duration (min)', 'Date', 'Departure time'])
+
+    # if choice == "cheapest":
+        
+
+
+def get_all_flights():
     
-#     print(type(departure_city_index))
-#     pprint(SHEET.worksheet("january1").row_values(departure_city_index+2))
+    table = PrettyTable(['Price ($)', 'Duration (min)', 'Date', 'Departure time'])
 
+    for i in range(1,3): # TODO: generalize
+        table.add_row(SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+    
+    print(table)
 
 
 
@@ -152,27 +178,15 @@ if __name__ == '__main__':
     while True:
         if departure_city_index == destination_city_index:
             reject_same_city()
-            departure_city_index = get_city("from")
-            destination_city_index = get_city("to")
+            departure_city_index = get_city("from")[0]
+            destination_city_index = get_city("to")[0]
         else:
             break
+
+
+    ask_need()
+
     
-    month = get_month()
-    # get_cheapest()
 
-    # month = get_month()
-    # print(Fore.BLUE + "\n" + "\033[1m" + f"Do you want cheapest or fastest trip? \n" + "\033[0m")
-
-
-
-# a = SHEET.worksheet("jan1").get_all_values()
-
-# pprint(a[2][1])
-
-# price = a[2][1].split(",")[0]
-# print(price)
-
-# duration = a[2][1].split(",")[1]
-# print(duration)
 
 
