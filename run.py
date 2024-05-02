@@ -20,6 +20,10 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 INT_SHEET = GSPREAD_CLIENT.open('interaction_matrix')
 # Booked flights spreadsheet
 BOOK_SHEET = GSPREAD_CLIENT.open('booked_flights')
+# define the cities available in the database
+cities = INT_SHEET.worksheet("january1").col_values(1)[1:]
+months = ["january", "february", "march"]
+
 
 
 def display_welcome():
@@ -33,16 +37,11 @@ def display_welcome():
     print(welcome_message)
 
 
-# define the cities available in the database
-cities = INT_SHEET.worksheet("january1").col_values(1)[1:]
-months = ["january", "february", "march"]
-
-
 
 def get_city(string):
     """
     fetches user input for the departure and destination questions 
-    and validates it through validate_city function
+    and validates it through the validate_data function
     
     parameters: string, either "from" or "to"
     returns: int (city_index) and string (city)
@@ -107,6 +106,13 @@ def validate_data(data, data_list):
 
 
 def get_month():
+    """
+    fetches user input for the month to travel 
+    and validates it through the validate_data function
+    
+    parameters: string, either "from" or "to"
+    returns: int (city_index) and string (city)
+    """
     while True:
         ask_time = \
             Fore.YELLOW + "\033[1m" + f"When are you travelling?" + \
