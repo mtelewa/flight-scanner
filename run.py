@@ -20,6 +20,8 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 INT_SHEET = GSPREAD_CLIENT.open('interaction_matrix')
 # Booked flights spreadsheet
 BOOK_SHEET = GSPREAD_CLIENT.open('booked_flights')
+# format the flight_data worksheet
+BOOK_SHEET.worksheet('flight_data').format("A:F", {"horizontalAlignment": "CENTER"})
 # define the cities available in the database
 cities = INT_SHEET.worksheet("january1").col_values(1)[1:]
 months = ["january", "february", "march"]
@@ -209,7 +211,7 @@ def validate_name(string):
     checks if user full name has numbers
     source: https://stackoverflow.com/questions/19859282/check-if-a-string-contains-a-number
     """
-    return any(char.isdigit() for char in inputString)
+    return any(char.isdigit() for char in string)
 
 
 def get_name():
@@ -235,13 +237,13 @@ def get_name():
             print(Fore.RED + "\033[1m" +  "Invalid last name. Please enter your full name as shown in the example" + "\033[0m" + "\n")
         else:
             name = first_name + " " + last_name
-            print(Fore.BLUE + "\033[1m" + f"Your name is {first_name} {last_name}" + "\033[0m" + "\n")
+            print(Fore.BLUE + "\033[1m" + f"Your name is {first_name.capitalize()} {last_name.capitalize()}" + "\033[0m" + "\n")
             break
     
     return name
 
 
-def book_flight():
+def book_flight(table):
     """
     updates the booked_flights spreadsheet
     """
@@ -251,7 +253,7 @@ def book_flight():
     
     name = get_name()
 
-    data = [name, depa]
+    data = [name, departure_city, destination_city]
     worksheet.append_row(data)
         
 
