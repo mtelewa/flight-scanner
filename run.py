@@ -29,8 +29,8 @@ def display_welcome():
 
 
 # define the cities available in the database
-cities = SHEET.worksheet("jan1").col_values(1)[1:]
-months = ["january", "february", "march"]
+cities = SHEET.worksheet("january1").col_values(1)[1:]
+months = ["january", "february", "march", "flexible"]
 
 
 
@@ -40,6 +40,7 @@ def get_city(string):
     and validates it through validate_city function
     
     parameters: string, either "from" or "to"
+    returns: int (city_index) and string (city)
     """
     while True:
         ask_city = \
@@ -62,7 +63,7 @@ def get_city(string):
             print(Fore.BLUE + "\033[1m" + f"You are travelling {string} {city.capitalize()}" + "\033[0m" + "\n")
             break
 
-    return city
+    return city_index, city
 
 
 
@@ -98,6 +99,11 @@ def validate_data(data, data_list):
             idx = None
 
 
+def reject_same_city():
+    print(Fore.RED + "\033[1m" + f"Departure and Destination cities cannot be the same!" + "\n" + "\033[0m")
+
+
+
 def get_month():
     while True:
         ask_time = \
@@ -123,6 +129,13 @@ def get_month():
     return month
 
 
+# def get_cheapest():
+
+#     print(departure_city_index, destination_city_index)
+    
+#     print(type(departure_city_index))
+#     pprint(SHEET.worksheet("january1").row_values(departure_city_index+2))
+
 
 
 
@@ -133,9 +146,22 @@ if __name__ == '__main__':
     Run all program functions
     """
     display_welcome()
-    departure_city = get_city("from")
-    destination_city = get_city("to")
+    departure_city_index = get_city("from")[0]
+    destination_city_index = get_city("to")[0]
+
+    while True:
+        if departure_city_index == destination_city_index:
+            reject_same_city()
+            departure_city_index = get_city("from")
+            destination_city_index = get_city("to")
+        else:
+            break
+    
     month = get_month()
+    # get_cheapest()
+
+    # month = get_month()
+    # print(Fore.BLUE + "\n" + "\033[1m" + f"Do you want cheapest or fastest trip? \n" + "\033[0m")
 
 
 
