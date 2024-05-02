@@ -103,8 +103,13 @@ def validate_data(data, data_list):
 
 
 def reject_same_city():
+    """
+    rejects user input if destination is same as departure, if so ask for new city input
+    """
     print(Fore.RED + "\033[1m" + f"Departure and Destination cities cannot be the same!" + "\n" + "\033[0m")
 
+
+                
 
 
 def get_month():
@@ -133,35 +138,68 @@ def get_month():
 
 
 def ask_need():
+    """
+    asks user whether the terminal shall display fastest, cheapest or all flights in the chosen month
+    and calls the get_entry function with the chosen option
+    """
     while True:
         try:
-            choice = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Check cheapest trip [0] or fastest trip [1], or all trips [3]? \n" + "\033[0m"))
+            choice = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Check cheapest trip [0] or fastest trip [1], or all trips [2]? \n" + "\033[0m"))
             if choice == 0:
-                get_certain("cheapest")
+                get_entry("cheapest")
+                break
             if choice == 1:
-                get_certain("fastest")
+                get_entry("fastest")
+                break
             if choice == 2:
-                get_all_flights()
+                get_entry("all")
+                break
+            else:
+                print(Fore.RED + "\033[1m" + "Please insert a number from 0 to 2" + "\033[0m" + "\n")
         except ValueError:
-            print("Please insert a number from 0 to 2")
+            print(Fore.RED + "\033[1m" + "Please insert a number from 0 to 2" + "\033[0m" + "\n")
 
 
-def get_certain(choice):
 
-    table = PrettyTable(['Price ($)', 'Duration (min)', 'Date', 'Departure time'])
-
-    # if choice == "cheapest":
-        
-
-
-def get_all_flights():
+def get_entry(choice):
+    """
+    fetch entry(ies) from the spread sheat based on user input of "fastest", "cheapest" or all flights
     
-    table = PrettyTable(['Price ($)', 'Duration (min)', 'Date', 'Departure time'])
+    parameters: 
+        choice: string, user choice from "fastest", "cheapest" or "all"
 
-    for i in range(1,3): # TODO: generalize
-        table.add_row(SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+    returns:
+        table: prettytable object, flight details (price, duration, date, time)
+    """
+    table = PrettyTable(['Price ($)', 'Duration (min)', 'Date', 'Departure time'])
+    sheets_per_month = 2
+
+    prices, durations = [], []
+    if choice == "cheapest":
+        print(Fore.BLUE + "\033[1m" + f"Searching cheapest flight in {month.capitalize()} .." + "\033[0m" + "\n")
+        for i in range(1,sheets_per_month+1):
+            prices.append(SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(",")[0])
     
-    print(table)
+        min_price = prices.index(min(prices))
+        table.add_row(SHEET.worksheet(f"{month}{min_price+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+        print(table)
+
+    if choice == "fastest":
+        print(Fore.BLUE + "\033[1m" + f"Searching fastest flight in {month.capitalize()} .." + "\033[0m" + "\n")
+        for i in range(1,sheets_per_month+1):
+            durations.append(SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(",")[1])
+
+        min_duration = durations.index(min(durations))
+        table.add_row(SHEET.worksheet(f"{month}{min_duration+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+        print(table)
+
+    if choice == "all":
+        print(Fore.BLUE + "\033[1m" + f"Searching all flights in {month.capitalize()} .." + "\033[0m" + "\n")
+        for i in range(1,sheets_per_month+1):
+            table.add_row(SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+        print(table)
+
+    return table
 
 
 
@@ -172,9 +210,12 @@ if __name__ == '__main__':
     Run all program functions
     """
     display_welcome()
+    
+    # get the indeces of the cities from the user input and validate the input
     departure_city_index = get_city("from")[0]
     destination_city_index = get_city("to")[0]
 
+    # check that the departure is not the same as destination
     while True:
         if departure_city_index == destination_city_index:
             reject_same_city()
@@ -183,6 +224,7 @@ if __name__ == '__main__':
         else:
             break
 
+    month = get_month()
 
     ask_need()
 
