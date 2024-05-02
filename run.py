@@ -3,6 +3,7 @@ from google.oauth2.service_account import Credentials
 from pprint import pprint
 from colorama import Fore, Back, Style
 from prettytable import PrettyTable
+import sys
 
 # set scope (lists apis that the program shall access in order to run)
 # It is a constant (that's why capital letters)
@@ -146,19 +147,20 @@ def ask_need():
         try:
             choice = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Check cheapest trip [0] or fastest trip [1], or all trips [2]? \n" + "\033[0m"))
             if choice == 0:
-                get_entry("cheapest")
+                table = get_entry("cheapest")
                 break
             if choice == 1:
-                get_entry("fastest")
+                table = get_entry("fastest")
                 break
             if choice == 2:
-                get_entry("all")
+                table = get_entry("all")
                 break
             else:
                 print(Fore.RED + "\033[1m" + "Please insert a number from 0 to 2" + "\033[0m" + "\n")
         except ValueError:
             print(Fore.RED + "\033[1m" + "Please insert a number from 0 to 2" + "\033[0m" + "\n")
 
+    return table
 
 
 def get_entry(choice):
@@ -182,8 +184,7 @@ def get_entry(choice):
     
         min_price = prices.index(min(prices))
         table.add_row(SHEET.worksheet(f"{month}{min_price+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
-        print(table)
-
+        
     if choice == "fastest":
         print(Fore.BLUE + "\033[1m" + f"Searching fastest flight in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1,sheets_per_month+1):
@@ -191,15 +192,15 @@ def get_entry(choice):
 
         min_duration = durations.index(min(durations))
         table.add_row(SHEET.worksheet(f"{month}{min_duration+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
-        print(table)
 
     if choice == "all":
         print(Fore.BLUE + "\033[1m" + f"Searching all flights in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1,sheets_per_month+1):
             table.add_row(SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
-        print(table)
 
     return table
+
+
 
 
 
@@ -224,9 +225,27 @@ if __name__ == '__main__':
         else:
             break
 
+    # 
     month = get_month()
+    table = ask_need()
+    print(table)
 
-    ask_need()
+    while True:
+        try:
+            proceed = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Book flight [0] or change month [1] or exit program [2]? \n" + "\033[0m"))
+            if proceed == 0:
+                book_flight()
+                break
+            if proceed == 1:
+                month = get_month()
+                table = ask_need()
+                print(table)
+            if proceed == 2:
+                sys.exit()
+
+        except ValueError:
+            print(Fore.RED + "\033[1m" + "Please insert a number from 0 to 2" + "\033[0m" + "\n")
+
 
     
 
