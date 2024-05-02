@@ -106,16 +106,6 @@ def validate_data(data, data_list):
             idx = None
 
 
-def reject_same_city():
-    """
-    rejects user input if destination is same as departure, if so ask for new city input
-    """
-    print(Fore.RED + "\033[1m" + f"Departure and Destination cities cannot be the same!" + "\n" + "\033[0m")
-
-
-                
-
-
 def get_month():
     while True:
         ask_time = \
@@ -245,19 +235,14 @@ def book_flight():
     """
     updates the booked_flights spreadsheet
     """
+
     print(Fore.YELLOW + "\033[1m" + f"Booking flight .." + "\033[0m" + "\n")
     worksheet = BOOK_SHEET.worksheet('flight_data')
     
     name = get_name()
 
-
-
-    
-
-            
-
-    # data = 
-    # worksheet.append_row(data)
+    data = [name, depa]
+    worksheet.append_row(data)
         
 
 
@@ -270,15 +255,19 @@ if __name__ == '__main__':
     display_welcome()
     
     # get the indeces of the cities from the user input and validate the input
-    departure_city_index = get_city("from")[0]
-    destination_city_index = get_city("to")[0]
+    depart_city = get_city("from")
+    destin_city = get_city("to")
+    departure_city_index, departure_city = depart_city[0], depart_city[1]
+    destination_city_index, destination_city = destin_city[0], destin_city[1]
 
     # check that the departure is not the same as destination
     while True:
         if departure_city_index == destination_city_index:
-            reject_same_city()
-            departure_city_index = get_city("from")[0]
-            destination_city_index = get_city("to")[0]
+            print(Fore.RED + "\033[1m" + f"Departure and Destination cities cannot be the same!" + "\n" + "\033[0m")
+            depart_city = get_city("from")
+            destin_city = get_city("to")
+            departure_city_index, departure_city = depart_city[0], depart_city[1]
+            destination_city_index, destination_city = destin_city[0], destin_city[1]
         else:
             break
 
