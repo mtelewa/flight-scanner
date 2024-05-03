@@ -193,7 +193,7 @@ def get_entry(choice):
 
     prices, durations = [], []
     if choice == "cheapest":
-        print(Fore.GREEN + "\033[1m" + "Searching cheapest flight"
+        print(Fore.BLUE + "\033[1m" + "Searching cheapest flight"
                                      + f" in {month.capitalize()} .. \n"
                                      + "\033[0m")
         for i in range(1, sheets_per_month+1):
@@ -209,7 +209,7 @@ def get_entry(choice):
                       destination_city_index+2).value.split(","))
 
     if choice == "fastest":
-        print(Fore.GREEN + "\033[1m" + "Searching fastest flight"
+        print(Fore.BLUE + "\033[1m" + "Searching fastest flight"
                                      + f" in {month.capitalize()} ..\n"
                                      + "\033[0m")
         for i in range(1, sheets_per_month+1):
@@ -225,7 +225,7 @@ def get_entry(choice):
                       destination_city_index+2).value.split(","))
 
     if choice == "all":
-        print(Fore.GREEN + "\033[1m" + "Searching all flights in"
+        print(Fore.BLUE + "\033[1m" + "Searching all flights in"
                                      + f" {month.capitalize()} ..\n"
                                      + "\033[0m")
         for i in range(1, sheets_per_month+1):
@@ -293,7 +293,7 @@ def book_flight(table):
     """
     updates the booked_flights spreadsheet
     """
-    print(Fore.GREEN + "\033[1m" + f"\nBooking flight ..\n" + "\033[0m")
+    print(Fore.BLUE + "\033[1m" + f"\nBooking flight ..\n" + "\033[0m")
     worksheet = BOOK_SHEET.worksheet('flight_data')
 
     while True:
@@ -323,8 +323,10 @@ def book_flight(table):
         table.del_column("Name")
 
         is_data_correct = input(Fore.YELLOW + "\033[1m" + "Is data correct?\n"
-                                            + "Please enter (yes/Y/y) or (no/N/n)\n"
-                                            + "Any other value is considered a 'No'\n"
+                                            + "Please enter (yes/Y/y) or"
+                                            + "(no/N/n)\n"
+                                            + "Any other value is considered"
+                                            + " a 'No'\n"
                                             + "\033[0m")
 
         if is_data_correct == 'y' or is_data_correct == 'Y' \
@@ -332,8 +334,10 @@ def book_flight(table):
             # append the data to the flight_data worksheet
             # in the booked_flights spreadsheet
             worksheet.append_row(data)
-            print(Fore.GREEN + "\033[1m" + f"Congratulations! Your flight reservation was added to our database\n"
-                             + "Our customer service will get back to you shortly to finalize the payment!\n"
+            print(Fore.GREEN + "\033[1m" + f"Congratulations! Your flight"
+                             + " reservation was added to our database\n"
+                             + "Our customer service will get back to you"
+                             + " shortly to finalize the payment!\n"
                              + "\033[0m")
             break
 
@@ -355,11 +359,14 @@ if __name__ == '__main__':
             destin_city = get_city("to")
 
             if depart_city[0] == destin_city[0]:
-                print(Fore.RED + "\033[1m" + f"Departure and Destination cities cannot be the same!" + "\n" + "\033[0m")
+                print(Fore.RED + "\033[1m" + f"Departure and Destination"
+                               + " cities cannot be the same!\n" + "\033[0m")
 
             else:
-                departure_city_index, departure_city = depart_city[0], depart_city[1]
-                destination_city_index, destination_city = destin_city[0], destin_city[1]
+                departure_city_index = depart_city[0]
+                departure_city = depart_city[1]
+                destination_city_index = destin_city[0]
+                destination_city = destin_city[1]
                 break
 
         # ask user what they are looking for
@@ -373,22 +380,34 @@ if __name__ == '__main__':
         while True:
             if len(table.rows) > 1:
                 try:
-                    flight_choice = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Which flight would you like to book?"
-                                                          + "\n" + f"Please choose a value from 0 to {len(table.rows)-1}"
-                                                          + "\n" + f"First flight is 0 and last flight is {len(table.rows)-1}" + "\n" + "\033[0m"))
+                    flight_choice = int(input(Fore.YELLOW + "\033[1m"
+                                        + "\nWhich flight would you"
+                                        + " like to book?"
+                                        + "\nPlease choose a value from"
+                                        + f"0 to {len(table.rows)-1}"
+                                        + "\nFirst flight is 0 and last"
+                                        + f" flight is {len(table.rows)-1}\n"
+                                        + "\033[0m"))
                     table = table[flight_choice]
-                    print(Fore.BLUE + "\033[1m" + f" the following trip" + "\033[0m" + "\n")
+                    print(Fore.GREEN + "\033[1m"
+                                    + "You chose the following trip\n"
+                                    + "\033[0m")
                     print(table)
                     break
                 except ValueError:
-                    print(Fore.RED + "\033[1m" + f"Please insert a number from 0 to {len(table.rows)-1}" + "\033[0m" + "\n")
+                    print(Fore.RED + "\033[1m" + "Please insert a number"
+                                   + f" from 0 to {len(table.rows)-1}\n"
+                                   + "\033[0m")
             else:
                 break
 
         # book flight or exit program
         while True:
             try:
-                book_or_exit = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Book flight [0] or change month [1] or exit program [2]? \n" + "\033[0m"))
+                book_or_exit = int(input(Fore.YELLOW + "\033[1m"
+                                   + "\nBook flight [0] or change month [1]"
+                                   + " or exit program [2]?\n"
+                                   + "\033[0m"))
                 if book_or_exit == 0:
                     book_flight(table)
                     break
@@ -400,12 +419,18 @@ if __name__ == '__main__':
                     sys.exit()
 
             except ValueError:
-                print(Fore.RED + "\033[1m" + "Please insert a number from 0 to 2" + "\033[0m" + "\n")
+                print(Fore.RED + "\033[1m"
+                               + "Please insert a number from 0 to 2\n"
+                               + "\033[0m")
 
-        rerun_program = input(Fore.YELLOW + "\n" + "\033[1m" + f"Would you like to book additional flights?"
-                                          + "\n" + "Please enter (yes/Y/y) or (no/N/n)"
-                                          + "\n" + "Any other value is considered a 'No'" + "\n" + "\033[0m")
+        rerun_program = input(Fore.YELLOW + "\033[1m"
+                              + "\nWould you like to book additional flights?"
+                              + "\nPlease enter (yes/Y/y) or (no/N/n)"
+                              + "\nAny other value is considered a 'No'\n"
+                              + "\033[0m")
 
-        if rerun_program != 'y' and rerun_program != 'Y' and rerun_program != 'yes':
-            print(Fore.GREEN + "\033[1m" + "Thank you! Have a nice trip!" + "\033[0m" + "\n")
+        if rerun_program != 'y' and rerun_program != 'Y' \
+                and rerun_program != 'yes':
+            print(Fore.GREEN + "\033[1m" + "Thank you! Have a nice trip!\n"
+                             + "\033[0m")
             break
