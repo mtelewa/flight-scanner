@@ -206,7 +206,7 @@ def validate_name(string):
     returns:
         boolean (True or False)
     """
-    return any(char.isdigit() for char in string) or any(not c.isalnum() for c in string)
+    return any(char.isdigit() for char in string) or any(not c.isalnum() for c in string) or not string
 
 
 def get_name():
@@ -224,6 +224,7 @@ def get_name():
         try:
             last_name = name.split(" ")[1]
         except IndexError:
+            last_name = first_name
             print(Fore.RED + "\033[1m" + "Please enter your full name as shown in the example" + "\033[0m" + "\n")
 
         if validate_name(first_name):
@@ -348,4 +349,3 @@ if __name__ == '__main__':
         if rerun_program != 'y' and rerun_program != 'Y' and rerun_program != 'yes':
             print(Fore.GREEN + "\033[1m" + "Thank you! Have a nice trip!" + "\033[0m" + "\n")
             break
-
