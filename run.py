@@ -193,29 +193,45 @@ def get_entry(choice):
 
     prices, durations = [], []
     if choice == "cheapest":
-        print(Fore.GREEN + "\033[1m" + f"Searching cheapest flight in {month.capitalize()} .." + "\033[0m" + "\n")
+        print(Fore.GREEN + "\033[1m" + "Searching cheapest flight"
+                                     + f" in {month.capitalize()} .. \n"
+                                     + "\033[0m")
         for i in range(1, sheets_per_month+1):
-            cell = INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value
+            cell = INT_SHEET.worksheet(f"{month}{i}").cell(
+                                       departure_city_index+2,
+                                       destination_city_index+2).value
             price = cell.split(",")[0]
             prices.append(price)
 
         min_price = prices.index(min(prices))
-        table.add_row(INT_SHEET.worksheet(f"{month}{min_price+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+        table.add_row(INT_SHEET.worksheet(f"{month}{min_price+1}").cell(
+                      departure_city_index+2,
+                      destination_city_index+2).value.split(","))
 
     if choice == "fastest":
-        print(Fore.GREEN + "\033[1m" + f"Searching fastest flight in {month.capitalize()} .." + "\033[0m" + "\n")
+        print(Fore.GREEN + "\033[1m" + "Searching fastest flight"
+                                     + f" in {month.capitalize()} ..\n"
+                                     + "\033[0m")
         for i in range(1, sheets_per_month+1):
-            cell = INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value
+            cell = INT_SHEET.worksheet(f"{month}{i}").cell(
+                                       departure_city_index+2,
+                                       destination_city_index+2).value
             duration = cell.split(",")[1]
             durations.append(duration)
 
         min_duration = durations.index(min(durations))
-        table.add_row(INT_SHEET.worksheet(f"{month}{min_duration+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+        table.add_row(INT_SHEET.worksheet(f"{month}{min_duration+1}").cell(
+                      departure_city_index+2,
+                      destination_city_index+2).value.split(","))
 
     if choice == "all":
-        print(Fore.GREEN + "\033[1m" + f"Searching all flights in {month.capitalize()} .." + "\033[0m" + "\n")
+        print(Fore.GREEN + "\033[1m" + "Searching all flights in"
+                                     + f" {month.capitalize()} ..\n"
+                                     + "\033[0m")
         for i in range(1, sheets_per_month+1):
-            table.add_row(INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
+            table.add_row(INT_SHEET.worksheet(f"{month}{i}").cell(
+                          departure_city_index+2,
+                          destination_city_index+2).value.split(","))
 
     return table
 
@@ -223,42 +239,52 @@ def get_entry(choice):
 def validate_name(string):
     """
     checks if user full name has numbers
-    sources:
-        - https://stackoverflow.com/questions/19859282/check-if-a-string-contains-a-number
-        - https://stackoverflow.com/questions/57062794/is-there-a-way-to-check-if-a-string-contains-special-characters
     parameters:
         string, name
     returns:
         boolean (True or False)
     """
-    return any(char.isdigit() for char in string) or any(not c.isalnum() for c in string) or not string
+    return any(char.isdigit() for char in string) or \
+        any(not c.isalnum() for c in string) or not string
 
 
 def get_name():
     """
-    fetches name from user input and validates it by calling validate_name function
+    fetches name from user input and validates it
+    by calling validate_name function
     """
     while True:
-        name = input(Fore.YELLOW + "\033[1m" + f"Please enter your full name" + "\n"
-                                 + "example: Alex Mustermann" + "\n"
-                                 + "please note that if you entered more than two names," "\n"
-                                 + "only the first two are considered" + "\033[0m" + "\n")
+        name = input(Fore.YELLOW + "\033[1m" + f"Please enter your full name\n"
+                                 + "example: Alex Mustermann\n"
+                                 + "Please note that if you entered more than"
+                                 + " two names, \nonly the first two are"
+                                 + " considered\n"
+                                 + "\033[0m")
 
-        # split name to first and last names and check that at least two names are input
+        # split name to first and last names and check that
+        # at least two names are input
         first_name = name.split(" ")[0]
         try:
             last_name = name.split(" ")[1]
         except IndexError:
             last_name = first_name
-            print(Fore.RED + "\033[1m" + "Please enter your full name as shown in the example" + "\033[0m" + "\n")
+            print(Fore.RED + "\033[1m" + "Please enter your full name as"
+                           + " shown in the example\n" + "\033[0m")
 
         if validate_name(first_name):
-            print(Fore.RED + "\033[1m" + "Invalid first name. Please enter your full name as shown in the example" + "\033[0m" + "\n")
+            print(Fore.RED + "\033[1m" + "Invalid first name. Please enter"
+                           + " your full name as shown in the example\n"
+                           + "\033[0m")
         elif validate_name(last_name):
-            print(Fore.RED + "\033[1m" + "Invalid last name. Please enter your full name as shown in the example" + "\033[0m" + "\n")
+            print(Fore.RED + "\033[1m" + "Invalid last name. Please enter"
+                           + " your full name as shown in the example\n"
+                           + "\033[0m")
         else:
             name = first_name + " " + last_name
-            print(Fore.BLUE + "\033[1m" + f"Your name is {first_name.capitalize()} {last_name.capitalize()}" + "\033[0m" + "\n")
+            print(Fore.GREEN + "\033[1m" + "Your name is"
+                             + f" {first_name.capitalize()}"
+                             + f" {last_name.capitalize()}\n"
+                             + "\033[0m")
             break
     return name
 
@@ -267,7 +293,7 @@ def book_flight(table):
     """
     updates the booked_flights spreadsheet
     """
-    print(Fore.YELLOW + "\033[1m" + f"Booking flight .." + "\033[0m" + "\n")
+    print(Fore.GREEN + "\033[1m" + f"\nBooking flight ..\n" + "\033[0m")
     worksheet = BOOK_SHEET.worksheet('flight_data')
 
     while True:
@@ -287,21 +313,28 @@ def book_flight(table):
         data = [name, departure_city, destination_city, price, date, time]
 
         # final data checks with the user
-        data_check = print(Fore.YELLOW + "\033[1m" + "Please check your details before finalizing the booking" + "\033[0m" + "\n")
+        data_check = print(Fore.YELLOW + "\033[1m"
+                                       + "Please check your details before"
+                                       + " finalizing the booking\n"
+                                       + "\033[0m")
 
         table.add_column("Name", [name.capitalize()])
         print(table)
         table.del_column("Name")
 
-        is_data_correct = input(Fore.YELLOW + "\033[1m" + "Is data correct?" + "\n"
-                                            + "Please enter (yes/Y/y) or (no/N/n)" + "\n"
-                                            + "Any other value is considered a 'No'" + "\n" + "\033[0m")
+        is_data_correct = input(Fore.YELLOW + "\033[1m" + "Is data correct?\n"
+                                            + "Please enter (yes/Y/y) or (no/N/n)\n"
+                                            + "Any other value is considered a 'No'\n"
+                                            + "\033[0m")
 
-        if is_data_correct == 'y' or is_data_correct == 'Y' or is_data_correct == 'yes':
-            # append the data to the flight_data worksheet in the booked_flights spreadsheet
+        if is_data_correct == 'y' or is_data_correct == 'Y' \
+                or is_data_correct == 'yes':
+            # append the data to the flight_data worksheet
+            # in the booked_flights spreadsheet
             worksheet.append_row(data)
-            print(Fore.GREEN + "\033[1m" + f"Congratulations! Your flight reservation was added to our database" + "\n"
-                                         + "Our customer service will get back to you shortly to finalize the payment!" + "\n" + "\033[0m")
+            print(Fore.GREEN + "\033[1m" + f"Congratulations! Your flight reservation was added to our database\n"
+                             + "Our customer service will get back to you shortly to finalize the payment!\n"
+                             + "\033[0m")
             break
 
 
@@ -316,7 +349,8 @@ if __name__ == '__main__':
 
         # check that the departure is not the same as destination
         while True:
-            # get the indeces of the cities from the user input and validate the input
+            # get the indeces of the cities from the user input
+            # and validate the input
             depart_city = get_city("from")
             destin_city = get_city("to")
 
@@ -328,12 +362,14 @@ if __name__ == '__main__':
                 destination_city_index, destination_city = destin_city[0], destin_city[1]
                 break
 
-        # ask user what they are looking for (cheapest, fastest or all flights in a certain month)
+        # ask user what they are looking for
+        # (cheapest, fastest or all flights in a certain month)
         month = get_month()
         table = ask_need()
         print(table)
 
-        # check if table has more than 1 row i.e. if more than flight is displayed, user has to choose one
+        # check if table has more than 1 row i.e. if more than
+        # one flight is displayed, user has to choose one
         while True:
             if len(table.rows) > 1:
                 try:
@@ -370,7 +406,6 @@ if __name__ == '__main__':
                                           + "\n" + "Please enter (yes/Y/y) or (no/N/n)"
                                           + "\n" + "Any other value is considered a 'No'" + "\n" + "\033[0m")
 
-        print(rerun_program)
         if rerun_program != 'y' and rerun_program != 'Y' and rerun_program != 'yes':
             print(Fore.GREEN + "\033[1m" + "Thank you! Have a nice trip!" + "\033[0m" + "\n")
             break
