@@ -3,9 +3,8 @@
 ## Contents
 
 * [Introduction](#introduction)
-* [Project](#project)
-  * [User goals](#user-goals)
-  * [Owner goals](#owner-goals)
+* [User Experience](#user-experience)
+* [Owner goals](#owner-goals)
 * [Pre development](#pre-development)
 * [Development](#development)
 * [Features](#features)
@@ -29,9 +28,42 @@
   - - -
 
 
-## Introduction 
+## Introduction
 
 The deployed project live link is [HERE](https://flight-scanner-0dcd2cac6601.herokuapp.com/)
+
+
+
+<figure align="center">
+  <img src="documentation/12990.png.webp" alt="egypt-map" width="50%">
+  <figcaption> Map of main sight seeing locations in Egypt. <a href="https://www.worldhistory.org/image/12990/map-of-ancient-egypt/" target="_blank"> Source </figcaption>
+</figure>
+
+
+## User Experience
+
+
+## Owner Goals
+
+
+
+## Pre development
+
+<p align="center">
+<img src="documentation/flow-chart.drawio.png" alt="flowchart" width="50%">
+</p>
+
+
+## Development
+
+
+
+## Features
+
+
+## Google Sheets
+
+
 
 
 ## Deployment
