@@ -264,11 +264,11 @@ def book_flight(table):
         # final data checks with the user
         data_check = print(Fore.YELLOW + "\033[1m" + "Please check your details before finalizing the booking" + "\033[0m" + "\n")
 
-        table.add_column("Name", [name.capitalize()])                                  
+        table.add_column("Name", [name.capitalize()])
         print(table)
-        table.del_column("Name") 
+        table.del_column("Name")
 
-        is_data_correct = input(Fore.YELLOW +  "\033[1m" + "Is data correct?" + "\n"
+        is_data_correct = input(Fore.YELLOW + "\033[1m" + "Is data correct?" + "\n"
                                             + "Please enter (yes/Y/y) or (no/N/n)" + "\n"
                                             + "Any other value is considered a 'No'" + "\n" + "\033[0m")
 
@@ -276,7 +276,7 @@ def book_flight(table):
             # append the data to the flight_data worksheet in the booked_flights spreadsheet
             worksheet.append_row(data)
             print(Fore.GREEN + "\033[1m" + f"Congratulations! Your flight reservation was added to our database" + "\n"
-                                          + "Our customer service will get back to you shortly to finalize the payment!" + "\n" + "\033[0m")
+                                         + "Our customer service will get back to you shortly to finalize the payment!" + "\n" + "\033[0m")
             break
 
 
@@ -312,9 +312,9 @@ if __name__ == '__main__':
         while True:
             if len(table.rows) > 1:
                 try:
-                    flight_choice = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Which flight would you like to book?"  
-                                                        + "\n" + f"Please choose a value from 0 to {len(table.rows)-1}"
-                                                        + "\n" + f"First flight is 0 and last flight is {len(table.rows)-1}" + "\n" + "\033[0m"))   
+                    flight_choice = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Which flight would you like to book?"
+                                                          + "\n" + f"Please choose a value from 0 to {len(table.rows)-1}"
+                                                          + "\n" + f"First flight is 0 and last flight is {len(table.rows)-1}" + "\n" + "\033[0m"))
                     table = table[flight_choice]
                     print(Fore.BLUE + "\033[1m" + f"You chose" + "\033[0m" + "\n")
                     print(table)
