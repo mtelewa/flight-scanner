@@ -261,9 +261,15 @@ def book_flight(table):
         data = [name, departure_city, destination_city, price, date, time]
 
         # final data checks with the user
-        is_data_correct = input(Fore.BLUE + "\033[1m" + "Please check your details before finalizing the booking" + "\n"
-                                          + "Enter (yes/Y/y) or (no/N/n)" + "\n"
-                                          + "Any other value is considered a 'No'" + "\n" + "\033[0m")
+        data_check = print(Fore.YELLOW + "\033[1m" + "Please check your details before finalizing the booking" + "\n"
+                                       + "Enter (yes/Y/y) or (no/N/n)" + "\n"
+                                       + "Any other value is considered a 'No'" + "\n" + "\033[0m")
+
+        table.add_column("Name", name)                                  
+        print(table)
+
+        is_data_correct = input(Fore.YELLOW +  "\033[1m" + "Is data correct?" + "\033[0m")
+
         if is_data_correct == 'y' or is_data_correct == 'Y' or is_data_correct == 'yes':
             # append the data to the flight_data worksheet in the booked_flights spreadsheet
             worksheet.append_row(data)
@@ -278,21 +284,18 @@ if __name__ == '__main__':
     """
     display_welcome()
 
-    # get the indeces of the cities from the user input and validate the input
-    depart_city = get_city("from")
-    destin_city = get_city("to")
-    departure_city_index, departure_city = depart_city[0], depart_city[1]
-    destination_city_index, destination_city = destin_city[0], destin_city[1]
-
     # check that the departure is not the same as destination
     while True:
-        if departure_city_index == destination_city_index:
+        # get the indeces of the cities from the user input and validate the input
+        depart_city = get_city("from")
+        destin_city = get_city("to")
+
+        if depart_city[0] == destin_city[0]:
             print(Fore.RED + "\033[1m" + f"Departure and Destination cities cannot be the same!" + "\n" + "\033[0m")
-            depart_city = get_city("from")
-            destin_city = get_city("to")
+
+        else:
             departure_city_index, departure_city = depart_city[0], depart_city[1]
             destination_city_index, destination_city = destin_city[0], destin_city[1]
-        else:
             break
 
     # ask user what they are looking for (cheapest, fastest or all flights in a certain month)
@@ -300,6 +303,23 @@ if __name__ == '__main__':
     table = ask_need()
     print(table)
 
+    # check if table has more than 1 row i.e. if more than flight is displayed, user has to choose one
+    while True:
+        if len(table.rows) > 1:
+            try:
+                flight_choice = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Which flight would you like to book?"  
+                                                      + "\n" + f"Please choose a value from 0 to {len(table.rows)-1}"
+                                                      + "\n" + f"First flight is 0 and last flight is {len(table.rows)-1}" + "\n" + "\033[0m"))   
+                table = table[flight_choice]
+                print(Fore.BLUE + "\033[1m" + f"You chose" + "\033[0m" + "\n")
+                print(table)
+                break
+            except ValueError:
+                print(Fore.RED + "\033[1m" + f"Please insert a number from 0 to {len(table.rows)-1}" + "\033[0m" + "\n")
+        else:
+            break
+
+    # book flight or exit program
     while True:
         try:
             book_or_exit = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Book flight [0] or change month [1] or exit program [2]? \n" + "\033[0m"))
