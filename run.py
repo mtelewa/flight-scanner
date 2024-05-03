@@ -118,7 +118,7 @@ def get_month():
             print(idx, val.capitalize())
 
         # fetch user input
-        month = input(Fore.BLUE + "\n" + "\033[1m" + f"I am travelling in: \n" + "\033[0m")
+        month = input(Fore.BLUE + "\n" + "\033[1m" + f"I am travelling in: \n" + "\033[0m").lower()
 
         # and validate it
         month_index = validate_data(month, months)
@@ -315,7 +315,7 @@ if __name__ == '__main__':
                                                           + "\n" + f"Please choose a value from 0 to {len(table.rows)-1}"
                                                           + "\n" + f"First flight is 0 and last flight is {len(table.rows)-1}" + "\n" + "\033[0m"))
                     table = table[flight_choice]
-                    print(Fore.BLUE + "\033[1m" + f"You chose" + "\033[0m" + "\n")
+                    print(Fore.BLUE + "\033[1m" + f" the following trip" + "\033[0m" + "\n")
                     print(table)
                     break
                 except ValueError:
