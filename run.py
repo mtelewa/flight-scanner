@@ -1,7 +1,6 @@
-import gspread
+sysimport gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
-from colorama import Fore, Back, Style
+from colorama import Fore
 from prettytable import PrettyTable
 import sys
 
