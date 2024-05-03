@@ -13,7 +13,7 @@
   * [Booked Flights](#booked_flights)
 * [Technologies Used](#technologies-used)
   * [Languages](#languages)
-  * [Libraries](#libraries)
+  * [Frameworks & Libraries](#frameworks--libraries)
 * [Testing](#testing)
   * [Validation](#validation)
   * [Test Cases](#test-cases)
@@ -63,7 +63,33 @@ The deployed project live link is [HERE](https://flight-scanner-0dcd2cac6601.her
 
 ## Google Sheets
 
+<p align="center">
+<img src="documentation/interaction_matrix.png" alt="interaction-matrix" width="50%">
+</p>
 
+<p align="center">
+<img src="documentation/booked_flights.png" alt="booked-flights" width="50%">
+</p>
+
+
+## Technologies Used
+
+### Languages
+
+* Python3.12.3
+
+### Frameworks & Libraries
+
+* [Git](https://git-scm.com/) for version control
+* [Github](https://github.com/) to store code and other files
+* [GitPod](https://gitpod.io/) IDE to create and edit the codes
+* [Draw IO](https://app.diagrams.net/) to draw flowcharts
+* [Heroku](https://www.heroku.com/) for cloud application deployment
+* [Google Console](https://console.cloud.google.com/) to create API for google sheets
+* [Python - prettytable](https://pypi.org/project/prettytable/) to print the table of flight details in python
+* [Python - colorama](https://pypi.org/project/colorama/) to style the displayed terminal font color
+* [Python - google-auth](https://pypi.org/project/google-auth/) for using Google’s various server-to-server authentication mechanisms to access Google APIs
+* [Python - gspread](https://pypi.org/project/gspread/) interface for working with Google Sheets.
 
 
 ## Deployment
