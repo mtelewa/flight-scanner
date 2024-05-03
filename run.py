@@ -20,7 +20,8 @@ INT_SHEET = GSPREAD_CLIENT.open('interaction_matrix')
 # Booked flights spreadsheet
 BOOK_SHEET = GSPREAD_CLIENT.open('booked_flights')
 # format the flight_data worksheet
-BOOK_SHEET.worksheet('flight_data').format("A:F", {"horizontalAlignment": "CENTER"})
+BOOK_SHEET.worksheet('flight_data').format("A:F",
+                                           {"horizontalAlignment": "CENTER"})
 # define the cities available in the database
 cities = INT_SHEET.worksheet("january1").col_values(1)[1:]
 months = ["january", "february", "march"]
@@ -31,9 +32,13 @@ def display_welcome():
     displays welcome message to the user
     """
     welcome_message = \
-        Fore.GREEN + "\033[1m" + "\n" + "********************************".center(40) + \
-                                 "\n" + "** Welcome to FLIGHT SCANNER! **".center(40) + \
-                                 "\n" + "********************************".center(40) + "\n" + "\033[0m"      # 40 columns will be in deployment terminal center
+        Fore.GREEN + "\033[1m" + "\n" + ("****************************"
+                                         "****").center(40) + \
+                                 "\n" + ("** Welcome to FLIGHT"
+                                         "SCANNER! **").center(40) + \
+                                 "\n" + ("**********************"
+                                         "**********").center(40) + \
+                                 "\n" + "\033[0m"
     print(welcome_message)
 
 
@@ -46,22 +51,26 @@ def get_city(string):
     """
     while True:
         ask_city = \
-            Fore.YELLOW + "\033[1m" + f"Where are you travelling {string}?" + \
-                                      "\n" + "Insert the full city name, first three letters or the number next to the city" + \
-                                      "\n" + "example: cairo, cai or 2 for Cairo \n" + "\033[0m"
+            Fore.YELLOW + "\033[1m" + f"Where are you travelling {string}?" \
+                        + "\n" + "Insert the full city name, first" \
+                        + " letters or the number next to the city \n" \
+                        + "example: cairo, cai or 2 for Cairo \n" \
+                        + "\033[0m"
         print(ask_city)
         # display the cities for the user
         for idx, val in enumerate(cities):
             print(idx, val.capitalize())
 
         # fetch user input
-        city = input(Fore.BLUE + "\n" + "\033[1m" + f"I am travelling {string}: \n" + "\033[0m").lower()
+        city = input(Fore.BLUE + "\033[1m" + f"\nI am travelling {string}"
+                               + "\n" + "\033[0m").lower()
 
         # and validate it
         city_index = validate_data(city, cities)
         if city_index is not None:
             city = cities[city_index]
-            print(Fore.BLUE + "\033[1m" + f"You are travelling {string} {city.capitalize()}" + "\033[0m" + "\n")
+            print(Fore.GREEN + "\033[1m" + f"\nYou are travelling {string}"
+                             + f" {city.capitalize()} \n" + "\033[0m")
             break
 
     return city_index, city
@@ -75,7 +84,8 @@ def validate_data(data, data_list):
         data: string, input by the user
         data_list: list, the database entries available
     returns:
-        idx: integer, index of the data_list where the data input by user was found to be true
+        idx: integer, index of the data_list where the data input
+             by user was found to be true
     """
     # check if full city name is in database
     if data in data_list:
@@ -93,9 +103,11 @@ def validate_data(data, data_list):
             if idx < len(data_list):
                 return idx
             else:
-                print(Fore.RED + "\033[1m" + f"Please choose a value from 0 to {len(data_list)-1} \n" + "\033[0m")
+                print(Fore.RED + "\033[1m" + "Please choose a value from 0"
+                               + f" to {len(data_list)-1} \n" + "\033[0m")
         except ValueError:
-            print(Fore.RED + "\033[1m" + f"Invalid data: {data} is not in the database \n" + "\033[0m")
+            print(Fore.RED + "\033[1m" + f"Invalid data: {data} is not"
+                           + " in the database \n" + "\033[0m")
             idx = None
 
 
@@ -108,9 +120,11 @@ def get_month():
     """
     while True:
         ask_time = \
-            Fore.YELLOW + "\033[1m" + f"When are you travelling?" + "\n" \
-                        + "Insert the full month name, first three letters or the month number" + "\n"\
-                        + "example: january, jan or 0 for January \n" + "\033[0m"
+            Fore.YELLOW + "\033[1m" + f"When are you travelling? \n" \
+                        + "Insert the full month name, first letters" \
+                        + " or the month number \n" \
+                        + "example: january, jan or 0 for January \n" \
+                        + "\033[0m"
         print(ask_time)
 
         # display the months for the user
@@ -118,25 +132,32 @@ def get_month():
             print(idx, val.capitalize())
 
         # fetch user input
-        month = input(Fore.BLUE + "\n" + "\033[1m" + f"I am travelling in: \n" + "\033[0m").lower()
+        month = input(Fore.BLUE + "\n" + "\033[1m"
+                                + f"I am travelling in: \n"
+                                + "\033[0m").lower()
 
         # and validate it
         month_index = validate_data(month, months)
         if month_index is not None:
             month = months[month_index]
-            print(Fore.BLUE + "\033[1m" + f"You are travelling in {month.capitalize()}" + "\033[0m" + "\n")
+            print(Fore.GREEN + "\033[1m" + "You are travelling"
+                             + f" in {month.capitalize()} \n" + "\033[0m")
             break
     return month
 
 
 def ask_need():
     """
-    asks user whether the terminal shall display fastest, cheapest or all flights in the chosen month
+    asks user whether the terminal shall display fastest,
+    cheapest or all flights in the chosen month
     and calls the get_entry function with the chosen option
     """
     while True:
         try:
-            choice = int(input(Fore.YELLOW + "\n" + "\033[1m" + f"Check cheapest trip [0] or fastest trip [1], or all trips [2]? \n" + "\033[0m"))
+            choice = int(input(Fore.YELLOW + "\033[1m"
+                                           + "\nCheck cheapest trip [0]"
+                                           + " or fastest trip [1], or all"
+                                           + " trips [2]? \n" + "\033[0m"))
             if choice == 0:
                 table = get_entry("cheapest")
                 break
@@ -147,27 +168,32 @@ def ask_need():
                 table = get_entry("all")
                 break
             else:
-                print(Fore.RED + "\033[1m" + "Please insert a number from 0 to 2" + "\033[0m" + "\n")
+                print(Fore.RED + "\033[1m" + "Please insert a number"
+                               + " from 0 to 2 \n" + "\033[0m")
         except ValueError:
-            print(Fore.RED + "\033[1m" + "Please insert a number from 0 to 2" + "\033[0m" + "\n")
+            print(Fore.RED + "\033[1m" + "Please insert a number"
+                           + " from 0 to 2 \n" + "\033[0m")
 
     return table
 
 
 def get_entry(choice):
     """
-    fetch entry(ies) from the spread sheat based on user input of "fastest", "cheapest" or all flights
+    fetch entry(ies) from the spread sheat based on user input
+    of "fastest", "cheapest" or all flights
     parameters:
         choice: string, user choice from "fastest", "cheapest" or "all"
     returns:
-        table: prettytable object, flight details (price, duration, date, time)
+        table: prettytable object, flight details
+        (price, duration, date, time)
     """
-    table = PrettyTable(['Price ($)', 'Duration (min)', 'Date', 'Departure time'])
+    table = PrettyTable(['Price ($)', 'Duration (min)',
+                         'Date', 'Departure time'])
     sheets_per_month = 2
 
     prices, durations = [], []
     if choice == "cheapest":
-        print(Fore.BLUE + "\033[1m" + f"Searching cheapest flight in {month.capitalize()} .." + "\033[0m" + "\n")
+        print(Fore.GREEN + "\033[1m" + f"Searching cheapest flight in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1, sheets_per_month+1):
             cell = INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value
             price = cell.split(",")[0]
@@ -177,7 +203,7 @@ def get_entry(choice):
         table.add_row(INT_SHEET.worksheet(f"{month}{min_price+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
 
     if choice == "fastest":
-        print(Fore.BLUE + "\033[1m" + f"Searching fastest flight in {month.capitalize()} .." + "\033[0m" + "\n")
+        print(Fore.GREEN + "\033[1m" + f"Searching fastest flight in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1, sheets_per_month+1):
             cell = INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value
             duration = cell.split(",")[1]
@@ -187,7 +213,7 @@ def get_entry(choice):
         table.add_row(INT_SHEET.worksheet(f"{month}{min_duration+1}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
 
     if choice == "all":
-        print(Fore.BLUE + "\033[1m" + f"Searching all flights in {month.capitalize()} .." + "\033[0m" + "\n")
+        print(Fore.GREEN + "\033[1m" + f"Searching all flights in {month.capitalize()} .." + "\033[0m" + "\n")
         for i in range(1, sheets_per_month+1):
             table.add_row(INT_SHEET.worksheet(f"{month}{i}").cell(departure_city_index+2, destination_city_index+2).value.split(","))
 
