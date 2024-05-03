@@ -55,7 +55,7 @@ def get_city(string):
             print(idx, val.capitalize())
 
         # fetch user input
-        city = input(Fore.BLUE + "\n" + "\033[1m" + f"I am travelling {string}: \n" + "\033[0m")
+        city = input(Fore.BLUE + "\n" + "\033[1m" + f"I am travelling {string}: \n" + "\033[0m").lower()
 
         # and validate it
         city_index = validate_data(city, cities)

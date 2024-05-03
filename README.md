@@ -1,32 +1,67 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Flight Scanner
 
-Welcome,
+## Contents
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+* [Introduction](#introduction)
+* [Project](#project)
+  * [User goals](#user-goals)
+  * [Owner goals](#owner-goals)
+* [Pre development](#pre-development)
+* [Development](#development)
+* [Features](#features)
+* [Google Sheets](#google-sheets)
+  * [Interaction Matrix](#interaction_matrix)
+  * [Booked Flights](#booked_flights)
+* [Technologies Used](#technologies-used)
+  * [Languages](#languages)
+  * [Libraries](#libraries)
+* [Testing](#testing)
+  * [Validation](#validation)
+  * [Test Cases](#test-cases)
+  * [Known Bugs](#known-bugs)
+* [Deployment](#deployment)
+  * [Google API](#google-api)
+  * [Heroku](#heroku)
+* [Credits](#credits)
+  * [Code Used](#code-used)
+  * [Acknowledgements](#acknowledgements)
 
-## Reminders
+  - - -
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
 
-## Creating the Heroku app
+## Introduction 
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+The deployed project live link is [HERE](https://flight-scanner-0dcd2cac6601.herokuapp.com/)
 
-1. `heroku/python`
-2. `heroku/nodejs`
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+## Deployment
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+### Heroku
 
-Connect your GitHub repository and deploy as normal.
+The app is deployed using Heroku platform. To Deploy the app:
 
-## Constraints
+1. Create a new app, add a unique app name (e.g. flight-scanner) and then choose the region
+2. Click on "Create app"
+3. Go to "Settings"
+4. Under Config Vars add "CREDS" as a "KEY" and the private API key json content (obtained from [google console](console.cloud.google)) as a "VALUE".
+5. In Config Vars, add "PORT" as "KEY" and '8000' as "VALUE".
+6. Add required buildpacks. For this project, Python and Nodejs were used in this order.
+7. Go to "Deploy" and select "GitHub" in "Deployment method"
+8. To connect Heroku app to the Github repository enter the repository name, click 'Search' and then 'Connect'.
+9. Choose the branch you want to build your app from, here it was `main`
+10. If preferred, click on "Enable Automatic Deploys", which keeps the app up to date with your GitHub repository
+11. Wait for the app to build. Once ready you will see the “App was successfully deployed” message and a 'View' button to take you to your deployed link.
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
 
----
 
-Happy coding!
+## Credits
+
+### Code Used
+
+* Get the value of a cell in prettytable [snippet](https://stackoverflow.com/questions/24365655/how-to-get-the-value-of-a-cell-when-using-prettytable)
+* Check if string contains number [snippet](https://stackoverflow.com/questions/19859282/check-if-a-string-contains-a-number)
+* Check if string contains special chatacters [snippet](https://stackoverflow.com/questions/57062794/is-there-a-way-to-check-if-a-string-contains-special-characters)
+
+### Acknowledgement
+
+I would like to thank my Code Institute mentor Jubril Akolade for his feedback and support
