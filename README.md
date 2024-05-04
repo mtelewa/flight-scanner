@@ -72,12 +72,21 @@ To help designing the algorithm behind the application, a flowchart was used. Th
 
 ## Google Sheets
 
-<p align="center">
-<img src="documentation/interaction_matrix.png" alt="interaction-matrix" width="50%">
-</p>
+Google spreadsheets were used as the databases to read from (the *interaction_matrix* spreadsheet) or write into (*booked_flights* spreadsheet).
+
+The interaction matrix was built to represent cities from-to flights. The first column represents the departure cities and the first row represents the destination cities. An example would be a flight from Luxor to Sinai is to row 6 column G, thus the respective cell would be G6. The cell contains 4 pieces of information: the price, the duration, the date and the time of the flight. These are to extracted and displayed by the python program.
+
+The *interaction_matrix* sheet has 6 worksheets, 2 for each of the three months. These 2 worksheets represent flight options available in the month. The database can be appended with more months and more flights. 
+
 
 <p align="center">
-<img src="documentation/booked_flights.png" alt="booked-flights" width="50%">
+<img src="documentation/interaction_matrix.png" alt="interaction-matrix" width="60%">
+</p>
+
+The *booked_flights* spreadsheet keeps a record of a user's chosen flight in addition to their name. Specifically, the record contains: name, from (city of departure), to (city of destination), price, date and time of flight. Each time a user interacts successfully with the program and chooses to book the flight, an entry is added to this spreadsheet.
+
+<p align="center">
+<img src="documentation/booked_flights.png" alt="booked-flights" width="60%">
 </p>
 
 
