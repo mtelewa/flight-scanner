@@ -5,8 +5,7 @@
 * [Introduction](#introduction)
 * [User Experience](#user-experience)
 * [Owner goals](#owner-goals)
-* [Pre development](#pre-development)
-* [Development](#development)
+* [Pre-development](#pre-development)
 * [Features](#features)
 * [Google Sheets](#google-sheets)
   * [Interaction Matrix](#interaction_matrix)
@@ -36,7 +35,7 @@ The deployed project live link is [HERE](https://flight-scanner-0dcd2cac6601.her
 <img src="documentation/mockup.png" alt="mockup" width="50%">
 </p>
 
-The app aims as a quick tool for users to check flights within Egypt's main sight-seeing sites (as shown on the map) in the high season months. The users have the opportunity to interact with a database (Google spreadsheet) to inquire about the cheapest, fastest or display all flights available for the selected month. The process to book a flight is made simple and with multiple checks on data entries along the way.
+The app aims as a quick tool for users to check flights within Egypt's main sight-seeing sites (as shown on the map) in the high season months. The users have the opportunity to interact with a database (Google spreadsheet) to inquire about the cheapest, fastest or display all flights available for the selected month. The process to book a flight is made simple and with multiple checks on data entries along the way. After successfully booking a flight, another database is updated with the user's name and ticket choice.
 
 
 <figure align="center">
@@ -47,19 +46,25 @@ The app aims as a quick tool for users to check flights within Egypt's main sigh
 
 ## User Experience
 
+The application users aim for the following
+* Quick and effortless interface to search for flights
+* Ability to filter flight search based on cheapest or fastest flights
+* Receive clear feedback on their input
 
 ## Owner Goals
+The application developers/owners aim for the following
+* Organized way of keeping record of user information and choices
+* Develop a program where new features can be appended easily
+* Present clear instructions and feedback to the users whenever possible
 
 
+## Pre-development
 
-## Pre development
+To help designing the algorithm behind the application, a flowchart was used. The flowchart combines input from user (orange parallelograms) used as input for decision-making (blue rhombi) check points. A decision is then taken to mainly validate the user input and generate the respective error (red rectangles) if the user gave an unexpected input. If the user's input passes i.e. error-free, a database is open for reading or writing and the database entries are displayed  (green rectangles).
 
 <p align="center">
 <img src="documentation/flow-chart.drawio.png" alt="flowchart" width="50%">
 </p>
-
-
-## Development
 
 
 
