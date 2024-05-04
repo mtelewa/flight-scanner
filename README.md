@@ -65,7 +65,7 @@ The application developers/owners aim for the following
 To help designing the algorithm behind the application, a flowchart was used. The flowchart combines input from user (orange parallelograms) used as input for decision-making (blue rhombi) check points. A decision is then taken to mainly validate the user input and generate the respective error (red rectangles) if the user gave an unexpected input. If the user's input passes i.e. error-free, a database is open for reading or writing and the database entries are displayed  (green rectangles).
 
 <p align="center">
-<img src="documentation/flow-chart.drawio.png" alt="flowchart" width="50%">
+<img src="documentation/flow-chart.drawio.png" alt="flowchart" width="70%">
 </p>
 
 
