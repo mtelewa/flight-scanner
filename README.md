@@ -69,8 +69,29 @@ To help designing the algorithm behind the application, a flowchart was used. Th
 
 ## Features
 
+* User input confirmation: the user gets their input displayed back at them to confirm it
 
+<p align="center">
+<img src="documentation/input-confirmation.png" alt="input-confirmation" width="70%">
+</p>
 
+* Rejecting input of destination city same as departure
+
+<p align="center">
+<img src="documentation/reject-same-city.png" alt="reject-same-city" width="70%">
+</p>
+
+* Accept numeric input as well as incomplete alphabetic input for cities and months
+
+<p align="center">
+<img src="documentation/accept-numeric.png" alt="accept-numeric" width="70%">
+</p>
+
+* Tabular display for flight details for a visual display of data
+
+<p align="center">
+<img src="documentation/table-display.png" alt="table-display" width="70%">
+</p>
 
 
 
@@ -141,7 +162,7 @@ The following test cases were performed on the program
 
 ### Known Bugs
 
-* The program 
+* When the user chooses cheapest or fastest flight, there might exist in the database more than one flight with the same price or duration. The program will automatically display the first flight in the database. Instead shall be displayed **all** flights that categorize as cheapest or fastest and they have to decide
 
 
 
