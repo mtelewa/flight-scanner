@@ -120,6 +120,8 @@ To help designing the algorithm behind the application, a flowchart was used. Th
 * Future features may inlcude
   * Adding more details about the airports and displaying this in the message before booking
   * Improved navigation options
+  * Add birthdate or email into user input to distinguish users with same name and flight details
+  * Allow user to book for more than one person at a time
 
 ## Google Sheets
 
@@ -180,8 +182,12 @@ The following test cases were performed on the program
 
 | Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
 | --- | --- | --- | --- | --- |
-|  |  |  |  |  |
-
+| Input confirmation | user gets their input displayed back at them | type input (e.g. departure city) | departure city is displayed | pass |
+| Rejecting out of database cities | user types city out of database | type input | 'not in database' message is displayed | pass |
+| Visual display of flight details | user receives a table of flight details | enter choice of cheapest/fastest/all trips | table is displayed | pass |
+| Display cheapest/fastest flight | user receives a table of cheapest/fastest flight details | enter choice of cheapest/fastest trips | table is displayed | pass |
+| Rejecting non-alphabetic/numeric/empty input in name | user gets notified that their input is invalid | type name with numbers or special characters | 'invalid name' message is displayed | pass |
+| Navigating to beginning | user gets a message to restart the program | reach the final step of booking successfully and type 'y' | user is redirected to book a new flight | pass |
 
 ### Known Bugs
 
