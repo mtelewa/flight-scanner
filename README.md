@@ -93,10 +93,33 @@ To help designing the algorithm behind the application, a flowchart was used. Th
 <img src="documentation/table-display.png" alt="table-display" width="70%">
 </p>
 
+* Reject values outside the range given with the appropriate feedback message
 
+<p align="center">
+<img src="documentation/reject-out-of-index.png" alt="reject-out-of-index" width="70%">
+</p>
 
+* Appropriate feedback messages and use of colors: Yellow representing waiting for user input, blue for buffer messages to open or fetch data from databases and green for confirming input
 
+<p align="center">
+<img src="documentation/coloring.png" alt="coloring" width="70%">
+</p>
 
+* Allow user to correct input 
+
+<p align="center">
+<img src="documentation/check-input.png" alt="check-input" width="70%">
+</p>
+
+* Navigation within the program
+
+<p align="center">
+<img src="documentation/navigation.png" alt="navigation" width="70%">
+</p>
+
+* Future features may inlcude
+  * Adding more details about the airports and displaying this in the message before booking
+  * Improved navigation options
 
 ## Google Sheets
 
