@@ -32,6 +32,11 @@
 
 The deployed project live link is [HERE](https://flight-scanner-0dcd2cac6601.herokuapp.com/)
 
+<p align="center">
+<img src="documentation/mockup.png" alt="mockup" width="50%">
+</p>
+
+The app aims as a quick tool for users to check flights within Egypt's main sight-seeing sites (as shown on the map) in the high season months. The users have the opportunity to interact with a database (Google spreadsheet) to inquire about the cheapest, fastest or display all flights available for the selected month. The process to book a flight is made simple and with multiple checks on data entries along the way.
 
 
 <figure align="center">
@@ -84,6 +89,7 @@ The deployed project live link is [HERE](https://flight-scanner-0dcd2cac6601.her
 * [Github](https://github.com/) to store code and other files
 * [GitPod](https://gitpod.io/) IDE to create and edit the codes
 * [Draw IO](https://app.diagrams.net/) to draw flowcharts
+* [Techsini](https://techsini.com/multi-mockup/) to show the website image on a range of devices
 * [Heroku](https://www.heroku.com/) for cloud application deployment
 * [Google Console](https://console.cloud.google.com/) to create API for google sheets
 * [Python - prettytable](https://pypi.org/project/prettytable/) to print the table of flight details in python
