@@ -394,7 +394,7 @@ if __name__ == '__main__':
                                     + "\033[0m")
                     print(table)
                     break
-                except ValueError, IndexError:
+                except (ValueError, IndexError) as e:
                     print(Fore.RED + "\033[1m" + "Please insert a number"
                                    + f" from 0 to {len(table.rows)-1}\n"
                                    + "\033[0m")
@@ -417,8 +417,12 @@ if __name__ == '__main__':
                     print(table)
                 if book_or_exit == 2:
                     sys.exit()
+                else:
+                    print(Fore.RED + "\033[1m"
+                                + "Please insert a number from 0 to 2\n"
+                                + "\033[0m")                    
 
-            except ValueError, IndexError:
+            except (ValueError, IndexError) as e:
                 print(Fore.RED + "\033[1m"
                                + "Please insert a number from 0 to 2\n"
                                + "\033[0m")
