@@ -1,7 +1,6 @@
 # Flight Scanner
 
 ## Contents
-
 * [Introduction](#introduction)
 * [User Experience](#user-experience)
 * [Owner goals](#owner-goals)
@@ -18,13 +17,11 @@
   * [Test Cases](#test-cases)
   * [Known Bugs](#known-bugs)
 * [Deployment](#deployment)
-  * [Google API](#google-api)
-  * [Heroku](#heroku)
 * [Credits](#credits)
   * [Code Used](#code-used)
   * [Acknowledgements](#acknowledgements)
 
-  - - -
+- - -
 
 
 ## Introduction
@@ -105,11 +102,24 @@ To help designing the algorithm behind the application, a flowchart was used. Th
 * [Python - gspread](https://pypi.org/project/gspread/) interface for working with Google Sheets.
 
 
+
+
+
+## Testing
+
+### Validation
+
+### Test Cases
+
+### Known Bugs
+
+
+
+
+
 ## Deployment
 
-### Heroku
-
-The app is deployed using Heroku platform. To Deploy the app:
+The app is deployed using [Heroku](https://www.heroku.com/) platform. To Deploy the app:
 
 1. Create a new app, add a unique app name (e.g. flight-scanner) and then choose the region
 2. Click on "Create app"
