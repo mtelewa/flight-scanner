@@ -32,7 +32,7 @@
 The deployed project live link is [HERE](https://flight-scanner-0dcd2cac6601.herokuapp.com/)
 
 <p align="center">
-<img src="documentation/mockup.png" alt="mockup" width="50%">
+<img src="documentation/mockup.png" alt="mockup" width="90%">
 </p>
 
 The app aims as a quick tool for users to check flights within Egypt's main sight-seeing sites (as shown on the map) in the high season months. The users have the opportunity to interact with a database (Google spreadsheet) to inquire about the cheapest, fastest or display all flights available for the selected month. The process to book a flight is made simple and with multiple checks on data entries along the way. After successfully booking a flight, another database is updated with the user's name and ticket choice.
