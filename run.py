@@ -384,7 +384,7 @@ if __name__ == '__main__':
                                         + "\nWhich flight would you"
                                         + " like to book?"
                                         + "\nPlease choose a value from"
-                                        + f"0 to {len(table.rows)-1}"
+                                        + f" 0 to {len(table.rows)-1}"
                                         + "\nFirst flight is 0 and last"
                                         + f" flight is {len(table.rows)-1}\n"
                                         + "\033[0m"))
