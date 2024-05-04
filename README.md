@@ -123,12 +123,25 @@ The *booked_flights* spreadsheet keeps a record of a user's chosen flight in add
 
 ## Testing
 
+The project was manually tested on Gitpod and Heroku terminals. The project was tested for functionality i.e. that it outputs what is intended or expected from it according to the algorithm presented in the flowchart. Also the program was tested by intentionally provding invalid input to properly give the user feedback on their wrong input if given.
+
 ### Validation
+
+* PEP8
+  * [CI Linter](https://pep8ci.herokuapp.com/#) was used to check the python code, the message *"All clear, no errors found"*
 
 ### Test Cases
 
+The following test cases were performed on the program
+
+| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
+| --- | --- | --- | --- | --- |
+|  |  |  |  |  |
+
+
 ### Known Bugs
 
+* The program 
 
 
 
